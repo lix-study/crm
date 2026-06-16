@@ -2,13 +2,19 @@ server:
   port: 8080
 
 spring:
+  application:
+    name: crm
   datasource:
-    url: jdbc:mysql://localhost:3306/crm?useSSL=false&serverTimezone=UTC
+    url: jdbc:mysql://localhost:3306/crm?useSSL=false&serverTimezone=UTC&characterEncoding=utf-8&allowPublicKeyRetrieval=true
     username: root
     password: 123456
     driver-class-name: com.mysql.cj.jdbc.Driver
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
 
-
+# MyBatis-Plus配置 - 符合PDF数据访问层规范
 mybatis-plus:
   mapper-locations: classpath:mapper/*.xml
   configuration:
@@ -16,7 +22,24 @@ mybatis-plus:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   global-config:
     db-config:
-      logic-delete-field: deleted # 全局逻辑删除字段名(deleted为实体类属性名称)
-      logic-delete-value: 1 # 逻辑已删除值。可选，默认值为 1
-      logic-not-delete-value: 0 # 逻辑未删除值。可选，默认值为 0
+      logic-delete-field: deleted
+      logic-delete-value: 1
+      logic-not-delete-value: 0
       id-type: auto
+
+# Knife4j接口文档配置 - 符合PDF基础设施层要求
+knife4j:
+  enable: true
+  setting:
+    language: zh_cn
+
+# 文件上传路径
+file:
+  upload-path: uploads
+
+# 日志配置 - 符合PDF日志管理规范
+logging:
+  level:
+    com.ccsu.crm: info
+    com.ccsu.crm.controller: info
+    com.ccsu.crm.service: info

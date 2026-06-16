@@ -1,6 +1,5 @@
 package com.ccsu.crm.service.impl;
 
-
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -11,8 +10,9 @@ import com.ccsu.crm.service.SysUserService;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-
-// 自动将SysUserServiceImpl类注册为Spring的Bean
+/**
+ * 系统用户Service实现类
+ */
 @Service
 public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> implements SysUserService {
 
@@ -30,8 +30,8 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
             queryWrapper.like(SysUser::getPhone, phone);
         }
 
-        // 查询未删除的数据
-        queryWrapper.eq(SysUser::getDeleted, false);
+        // 查询未删除的数据（deleted=0）
+        queryWrapper.eq(SysUser::getDeleted, 0);
 
         return baseMapper.selectPage(page, queryWrapper);
     }
